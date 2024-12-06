@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h1>คำนวณหาค่า (BMI)</h1>
+            <label for="">น้ำหนัก (kg): </label>
+            <input id="toWeight" type="number">
+            <label for="">ส่วนสูง (cm):  </label>
+            <input id="toHeight" type="number">
+            <button onclick="showBmi()">Result</button>
+        </div>
+        <div>
+            <p>BMI: <span id="bmiResult"></span></p>
+            <p><b>คำแนะนำ:</b> <span id="bmiNote"></span></p>
+        </div>
+        <div>
+            <p>
+                แหล่งอ้างอิง : <a href="https://bpk9internationalhospital.com/care_blog/content/%E0%B8%84%E0%B8%B3%E0%B8%99%E0%B8%A7%E0%B8%93%E0%B8%94%E0%B8%B1%E0%B8%8A%E0%B8%99%E0%B8%B5%E0%B8%A1%E0%B8%A7%E0%B8%A5%E0%B8%81%E0%B8%B2%E0%B8%A2%E0%B8%95%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%97%E0%B9%88%E0%B8%B2%E0%B9%84%E0%B8%AB%E0%B8%A3%E0%B9%88%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%81%E0%B8%A7%E0%B9%88%E0%B8%B2%E0%B8%AD%E0%B9%89%E0%B8%A7%E0%B8%99" target="_blank">https://bpk9internationalhospital.com</a>
+            </p>
+        </div>  
+    </div>
+    
+    <script>
+       
+        function calculateBmi() {
+
+            let weight = document.getElementById('toWeight').value;
+            let height = document.getElementById('toHeight').value;
+            
+            if(!weight || !height || weight <= 0 || height <= 0) {
+                alert('กรุณากรอกน้ำหนักส่วนสูงให้ถูกต้อง');
+            }
+
+            return weight / ((height / 100) ** 2);
+
+        }
+
+        function showBmi() {
+            let bmi = calculateBmi();
+            let show = document.getElementById('bmiNote');
+            document.getElementById('bmiResult').innerHTML = bmi.toFixed(2);
+            if (bmi <= 18.5 && bmi != 0) {
+                show.innerHTML = 'ผอมเกินไป <br> น้ำหนักน้อยกว่าปกติ ซึ่งก็ไม่ค่อยดีนัก หากคุณมีน้ำหนักน้อยเกินไปอาจเสี่ยงต่อการได้รับสารอาหารไม่เพียงพอหรือได้รับพลังงานไม่เพียงพอ ส่งผลให้ร่างกายอ่อนเพลียง่าย หรือเป็นโรคขาดสารอาหาร การรับประทานอาหารให้เพียงพอครบ 5 หมู่ในสัดส่วนที่พอเหมาะและการออกกำลังกายเพื่อเสริมสร้างกล้ามเนื้อ สามารถช่วยเพิ่มค่า BMI ให้อยู่ในเกณฑ์ปกติได้';
+            }else if(bmi >= 18.5 && bmi <= 25.0) {
+                show.innerHTML = 'น้ำหนักปกติ <br> น้ำหนักเหมาะสม เป็นน้ำหนักที่เหมาะสมสำหรับคนไทย คือค่า BMI ระหว่าง 18.5-25 จัดอยู่ในเกณฑ์ที่ดี ห่างไกลโรคที่เกิดจากความอ้วน และมีความเสี่ยงต่อการเกิดโรคต่างๆ น้อยที่สุด ควรพยายามรักษาระดับค่า BMI ให้อยู่ในระดับนี้ให้นานที่สุด และควรตรวจสุขภาพทุกปี'
+            }else if(bmi >= 25.0 && bmi <= 30) {
+                show.innerHTML = 'เริ่มอ้วน <br> เป็นน้ำหนักที่เริ่มอ้วนในระดับหนึ่ง ถึงแม้จะไม่ถึงเกณฑ์ที่ถือว่าอ้วนมาก แต่ก็เริ่มมีความเสี่ยงต่อการเกิดโรคที่มากับความอ้วนได้เช่นกัน ทั้งโรคเบาหวาน และความดันโลหิตสูง ควรปรับพฤติกรรมการทานอาหาร เริ่มออกกำลังกาย และตรวจสุขภาพ'
+            }else if(bmi >= 30.0 && bmi <= 35.0) {
+                show.innerHTML = 'อ้วน <br> เป็นน้ำหนักที่ค่อนข้างอันตราย เสี่ยงต่อการเกิดโรคร้ายแรงที่แฝงมากับความอ้วน หากค่า BMI อยู่ในระดับนี้ จะต้องปรับพฤติกรรมการทานอาหาร ต้องออกกำลังกาย ควรไปตรวจสุขภาพและปรึกษาแพทย์'
+            }else if(bmi >= 35) {
+                show.innerHTML = 'อ้วนมากผิดปกติ <br> เป็นน้ำหนักที่อันตรายมากแล้ว มีความเสี่ยงสูงมากต่อการเกิดโรคร้ายแรงที่แฝงมากับความอ้วน ทั้งโรคเบาหวาน และความดันโลหิตสูง ควรไปตรวจสุขภาพและปรึกษาแพทย์ทันทีเพื่อหาวิธีแก้ไข'
+            }else {
+                show.innerHTML = 'ERROR'
+                document.getElementById('bmiResult').innerHTML = 'ERROR'
+            }
+        }
+            
+    </script>
+
+</body>
+</html>
